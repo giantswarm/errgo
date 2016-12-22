@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/giantswarm/errgo.svg?&style=shield&circle-token=d7f9d8e97f70f7ad5c362e43cf7bd525594a2a6d)](https://circleci.com/gh/giantswarm/errgo) [![GoDoc](https://godoc.org/github.com/giantswarm/errgo?status.svg)](http://godoc.org/github.com/giantswarm/errgo)
+[![CircleCI](https://circleci.com/gh/giantswarm/errgo.svg?&style=shield&circle-token=36e15323510f6d4dcc3f095856560e9fd0c6c110)](https://circleci.com/gh/giantswarm/errgo) [![GoDoc](https://godoc.org/github.com/giantswarm/errgo?status.svg)](http://godoc.org/github.com/giantswarm/errgo)
 
 # errgo
 
@@ -11,7 +11,7 @@ This repository is a fork. The original can be found at
 https://github.com/juju/errgo. There are two minor changes to polish the error
 management.
 
-1. Trace(err) string
+1. added Trace(error) string
 
 This
 
