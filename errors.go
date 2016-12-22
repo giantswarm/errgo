@@ -148,10 +148,12 @@ func Details(err error) string {
 			loc := err.Location()
 			if loc.IsSet() {
 				s = append(s, loc.String()...)
-				s = append(s, ": "...)
 			}
 		}
 		if cerr, ok := err.(Wrapper); ok {
+			if cerr.Message() != "" {
+				s = append(s, ": "...)
+			}
 			s = append(s, cerr.Message()...)
 			err = cerr.Underlying()
 		} else {

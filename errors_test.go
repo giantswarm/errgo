@@ -12,7 +12,7 @@ import (
 
 	gc "gopkg.in/check.v1"
 
-	"github.com/juju/errgo"
+	"github.com/giantswarm/errgo"
 )
 
 var (
@@ -67,7 +67,7 @@ func (*errorsSuite) TestNoteUsage(c *gc.C) {
 func (*errorsSuite) TestMask(c *gc.C) {
 	err0 := errgo.WithCausef(nil, someErr, "foo") //err TestMask#0
 	err := errgo.Mask(err0)                       //err TestMask#1
-	checkErr(c, err, err0, "foo", "[{$TestMask#1$: } {$TestMask#0$: foo}]", err)
+	checkErr(c, err, err0, "foo", "[{$TestMask#1$} {$TestMask#0$: foo}]", err)
 
 	err = errgo.Mask(nil)
 	c.Assert(err, gc.IsNil)
@@ -175,7 +175,7 @@ func (*errorsSuite) TestDetails(c *gc.C) {
 	checkErr(c, err1, err0, "bar: foo", "[{$TestStack#1$: bar} {$TestStack#0$: foo}]", err1)
 
 	err2 := errgo.Mask(err1) //err TestStack#2
-	checkErr(c, err2, err1, "bar: foo", "[{$TestStack#2$: } {$TestStack#1$: bar} {$TestStack#0$: foo}]", err2)
+	checkErr(c, err2, err1, "bar: foo", "[{$TestStack#2$} {$TestStack#1$: bar} {$TestStack#0$: foo}]", err2)
 }
 
 func (*errorsSuite) TestMatch(c *gc.C) {
