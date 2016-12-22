@@ -148,14 +148,63 @@ func Details(err error) string {
 			loc := err.Location()
 			if loc.IsSet() {
 				s = append(s, loc.String()...)
-				s = append(s, ": "...)
 			}
 		}
 		if cerr, ok := err.(Wrapper); ok {
+			if cerr.Message() != "" {
+				s = append(s, ": "...)
+			}
 			s = append(s, cerr.Message()...)
 			err = cerr.Underlying()
 		} else {
 			s = append(s, err.Error()...)
+			err = nil
+		}
+		if debug {
+			if err, ok := err.(Causer); ok {
+				if cause := err.Cause(); cause != nil {
+					s = append(s, fmt.Sprintf("=%T", cause)...)
+					s = append(s, Details(cause)...)
+				}
+			}
+		}
+		s = append(s, '}')
+		if err == nil {
+			break
+		}
+		s = append(s, ' ')
+	}
+	s = append(s, ']')
+	return string(s)
+}
+
+// Trace returns information about the stack of
+// underlying errors wrapped by err, in the format:
+//
+// 	[{filename:99} {otherfile:55}]
+//
+// The details are found by type-asserting the error to
+// the Locationer, Causer and Wrapper interfaces.
+// Details of the underlying stack are found by
+// recursively calling Underlying when the
+// underlying error implements Wrapper.
+func Trace(err error) string {
+	if err == nil {
+		return "[]"
+	}
+	var s []byte
+	s = append(s, '[')
+	for {
+		s = append(s, '{')
+		if err, ok := err.(Locationer); ok {
+			loc := err.Location()
+			if loc.IsSet() {
+				s = append(s, loc.String()...)
+			}
+		}
+		if cerr, ok := err.(Wrapper); ok {
+			err = cerr.Underlying()
+		} else {
 			err = nil
 		}
 		if debug {
