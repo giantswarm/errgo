@@ -11,8 +11,6 @@ This repository is a fork. The original can be found at
 https://github.com/juju/errgo. There are two minor changes to polish the error
 management.
 
-1. added Trace(error) string
-
 This
 
 ```go
@@ -31,5 +29,5 @@ instead of this using the old `errgo.Details`
 [{/go/src/github.com/giantswarm/test/main.go:36: } {/go/src/github.com/giantswarm/test/main.go:34: } {jerr}]
 ```
 
-2. Note that `: ` is omitted in case there is no error message to the location
+Also note that `: ` is omitted in case there is no error message to the location
 information of a specific error.
